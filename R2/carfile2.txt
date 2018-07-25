@@ -1,0 +1,10 @@
+make: Toyota model: Yaris year: 2013
+make: Subaru model: Forestor year: 2000
+make: Nissan model: Veras year: 2001
+make: Chevy model: Tahoe year: 2003
+make: Dodge model: Dart year: 1998
+make: Ford model: Fiesta year: 2015
+make: Mitsubishi model: Lancer year: 2016
+make: Nissan model: Sentra year: 2003
+make: Ford model: Taurus year: 2016
+make: Chevy model: Impala year: 1995

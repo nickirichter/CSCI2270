@@ -1,0 +1,104 @@
+Lecture 3/19: Graphs
+Search Algorithms
+Breadth-First Search
+
+unweighted=uniform edge weight
+go between two edges, the distance is the same (i.e., 1)
+distance is number of edges you have traversed
+
+what is shortest path? Use breadthfirst search(BFS) in unweighted graph
+will always find optimal solution
+things to keep track of:
+	-what is distance to a vertex?
+		distance to parent +1
+	-where have we been?
+		parameter to keep track of which verticies have been visited
+	-where did we come from?
+		who is the parent of the node I visited?
+
+Modifications:
+
+struct vertex{
+	key
+	adj
+	bool visited //have we been to the vertex?
+	int distance //# of edges back to start
+	vertex* parent //which vertex did we come from?
+}
+
+BFS(startValue, endValue){ //gives path to our graph
+	//returns a pointer to endValue vertex
+	vertex* v=search(startValue)
+	//acts as the "root", distance to start is 0, start has no parent
+	v->visited=true
+	v->distance=0
+	v->parent=NULL
+	queue=new queue()
+	queue.enq(V)
+	while(queue not empty){
+		vertex* n=queue.deq() //starting vertex will pop off (n is start)
+		for(x=0; x<n->adj.size; x++){
+			if(!n->adj[x].v->visited){
+				n->adj[x].v->distance=n->distance+1 //n->distance is distance to the parent
+				n->adj[x].v->parent=n
+				if(n->adj[x].v->key==n->value){
+					return n->adj[x].v
+				}
+				else{
+					n->adj[x].v->visited=true
+					queue.enq(n->adj[x].v)
+				}
+			}
+		}
+	}
+
+}
+
+Depth-First Search (DFS): deeper in graph before going across graph
+	recursive or non-recursive (iterative)
+Recursive:
+DFS(vertex)
+{
+	vertex.visited=true;
+	for(x=0 to vertex.adj.size())
+	{
+		if(vertex.adj[x].v.visited==false)
+		{
+			print(vertex.adj[x].v.key)
+			DFS(vertex.adj[x].v)
+		}
+	}
+}
+
+Iterative:
+DFS(vertex)
+{
+	vertex=search(value) //vertex is pointer
+	vertex.visited=true
+	stack.push(vertex)
+	while(stack!empty)
+	{
+		ve=stack.pop()
+		print(ve.key)
+		for(x=0 to ve.adj.size())
+		{
+			if(!ve.adj[x].v.visited)
+			{
+				ve.adj[x].v.visited=true
+				stack.push(ve.adj[x].v)
+			}
+		}
+	}	
+}
+
+
+
+
+
+
+
+
+
+
+
+

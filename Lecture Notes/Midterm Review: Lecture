@@ -1,0 +1,50 @@
+Midterm Review: Lecture
+Q1
+unweighted shortest path: BFS is guaranteed to return shortest path in unweighted graph
+testcase 1:
+shortestPath(S,D,B)//means start at B, go to D, pass thru B
+BFS
+start at S
+S: visited=T, prev=null
+dequeue S
+A: visited=T, prev=S
+dequeue A
+E: visited=T, prev=S
+B: visited=T, prev=A
+C: visited=T, prev=A
+dequeue E, no adjacent vertices unvisited
+dequeue B
+D: visited=T, prev=B
+D is what we were searching for thus we have a path to D
+
+to know where we came from, we look at D.prev, check if D.prev=B. If true, we came through B; if false, must go back to that node's previous (D.prev.prev //use pointer to that node, not correct syntax) until vertex.prev=NULL //know you are at beginning vertex. If B not found anywhere, then B not on path
+Question:
+come up with a graph where shortest path doesn't go through a specified node; g.shortestPath(A,B,C) returns false
+
+Q2
+void Graph::printMislabeledParents(int startVertex) {
+	vertex *start;
+	for (int i = 0; i < (int)vertices.size(); i++) {
+		vertices[i].visited = false;
+		if (vertices[i].value == startVertex) {
+			start = &vertices[i];
+		}
+	}
+
+	queue<vertex*> Q;
+	Q.push(start);
+	start->visited = true;
+	cout << start->value << end;
+	while (!Q.empty()) {
+		vertex *node = Q.front();
+		Q.pop();
+			
+                    //Students have to fill in this part of the code
+
+		}
+	}
+}
+
+Q7
+How do we color nodes based on # of hops when we're not storing that information?
+look at the parent of adjacent vertex, color current vertex as the opposite color

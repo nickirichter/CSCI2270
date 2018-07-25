@@ -1,0 +1,135 @@
+Lecture 3/5: Red & Black Trees
+Balanced vs Unbalanced BST
+
+At any level BST, I can have 2^(i)-1 nodes  //i=level in tree
+Ex. 2^(3)-1=7
+O(log2n)<O(n) //search, find, delete operations much faster if tree is balanced
+
+Tree Balancing Algorithms
+AVL Tree: simple, but not used in practice
+B-Trees: used in database storage algorithms
+
+Red-Black Trees: not simple, but used in commercial applications
+	assign additional properties to nodes in a tree, perform rotations, other actions to preserve those properties
+	each node in BST is assigned a color (red or black)
+	
+	Properties of the RB Tree
+		1. A node is either red or black
+		2. The root node is black
+		3. Every leaf node is black
+		4. If a node is red, both of its children must be black
+		5. For each path through the tree, all paths to leaf nodes contain same number of black nodes
+
+	Leaf nodes: 
+	in BST, leaf nodes are left, right null children
+	in RB tree, leaf nodes are empty nodes instead of pointing null, leaf nodes point to empty null node
+
+	How to fix violations:
+	Recolor: change the node color(red->black, black->red)
+	Rotation: change the height of the subtree
+
+	Rotations: Left and Right (inverses of each other)
+
+	Inserting a node into a RB Tree: same as BST w some extra steps
+		1. Replace null with nullnode
+		2. Set the color of the new node to red
+		3. Resolve violations of the RB properties using recoloring and rotation
+	Examples of violations
+		1. Add node to empty tree: recall newnode is red, violation: root of tree must be black
+			solution, recolor to be black
+
+Operations on a balanced tree much more efficient than on an unbalanced tree
+Rotations:
+leftRotate(x) 
+	y=x->rightchild
+	x->rightchild=y->leftchild
+	if(y->leftchild!=nullNode)
+	{
+		y->leftchild->parent=x
+	}
+	y->parent=x->parent
+	if(x->parent==nullNode)
+	{
+		root=y
+	}
+	else
+	{
+		if(x==x->parent->leftchild)
+		{
+			x->parent->leftchild=y
+		}
+		else
+		{
+			x->parent->rightchild=y
+		}
+	}
+	y->leftchild=x
+	x->parent=y
+
+rightRotate(y)
+	x=y->leftchild
+	y->leftchild=x->rightchild
+	if(x->rightchild!=nullNode)
+	{
+		x->rightchild->parent=y
+	}
+	x->parent=y->parent
+	if(y->parent==nullNode)
+	{
+		root=x
+	}
+	else
+	{
+		if(y==y->parent->leftchild)
+		{
+			y->parent->leftchild=x
+		}
+		else
+		{
+			y->parent->rightchild=x
+		}
+	}
+	x->rightchild=y
+	y->parent=x
+
+Inserting Node in Red Black Tree:
+6 possible configurations that RB tree can take
+3 configurations are symmetric to the other three: depending on whether parent of new node is right or left child
+Following code is 3 configurations where parent is left child
+First, identify the "uncle" node in the tree
+
+																													[]
+																												[]		[y] "uncle"
+																											[x]
+
+Case 1: Uncle is red
+x is new node therefore red, violation: red parent has red child
+
+																													[18]
+																												
+																												[15r]	[21]"uncle"
+
+																											x[11r]	[16]
+
+Case 2: new node is right child and "uncle" is black
+
+																													[18]
+																												
+																												[15r]	[21] "uncle"
+																											
+																											[11]	[16r]x
+Case 3: new node is a leftchild and "uncle" is black
+
+																													[18]
+																												
+																												[15r]	[21]
+
+																											x[11r]	[16]
+
+redBlackInsert(value)
+{
+	Node* x=insert(value) //puts node in BST, but could create violations
+	
+
+}
+

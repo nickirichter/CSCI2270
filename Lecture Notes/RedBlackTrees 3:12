@@ -1,0 +1,62 @@
+Deleting a node from a RB tree
+BST Delete:
+node has no children- delete node
+one child- replace node w its child
+two children- replace w min in right subtree
+Violation:
+Violation occurs if node's replacement is black
+	potentially changes the number of black nodes on a path
+
+RBDelete(value)
+	node=search(value)
+	nodeColor=node.color //nodeColor is color of node to delete
+	if(node!=root)
+		if(noChildren)
+			x=node.parent.left //assuming node is leftChild
+		else if(twoChildren)
+			min=treeMin(node.right)
+			nodeColor=min.color //nodeColor is color of replacement node
+			x=min.rightChild 	//x could be nullNode
+			x.parent=min 		//x could be nullNode
+			//code to replace node with min from BST delete
+			min.color=node.color //changing color of replacement
+		else //one child
+		x=node.left 			//x is node's replacement
+		node.parent.left=x		//x is node's replacement
+		x.parent=node.parent	//x is node's replacement
+	else
+		//handle root
+	if(nodeColor==black)
+		rbBalance(x) //x can be nullNode, min's rightChild, or node's replacement
+
+RBBalance(x){
+while (x != root and x.color == BLACK){
+if (x == x.parent.leftChild){
+ s = x.parent.rightChild
+ if (s.color == RED){ //Case 1
+ s.color = BLACK
+ x.parent.color = RED
+ leftRotate(x.parent)
+ s = x.parent.rightChild
+ }
+if (s.leftChild.color == BLACK and s.rightChild.color == BLACK){ //Case 2
+ s.color = RED
+ x = x.parent
+ }else if(s.leftChild.color == RED and s.rightChild.color == BLACK){ //Case 3
+ s.leftChild.color = BLACK
+ s.color = RED
+ rightRotate(s)
+ s = x.parent.rightChild
+ }else{
+ s.color = x.parent.color //Case 4
+ x.parent.color = BLACK
+ s.rightChild.color = BLACK
+ leftRotate(x.parent)
+ x = root
+}
+ }else{
+ //x is a right child
+ //exchange left and right
+}
+}
+x.color = BLACK

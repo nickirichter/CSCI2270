@@ -1,0 +1,147 @@
+Priority Queues
+queue: items removed in order of arrival
+priority queue: requests with highest priority processed first (deleted from the queue)
+
+Two Approaches for Priority Queue:
+1) The higher the number, the higher the priority 
+2) The lower the number, the higher the priority
+note* highest priority is first out
+
+Where Priority Queues are Used
+1) Operating System
+	needs to control what happens first, what matters the most
+	how are tasks processed?
+2) Emergency Room
+	processing patients by severity of injury
+
+Implementations
+	Different data structures can be used to build priority queues (time-memory tradeoffs)
+	Slowest/worst possible way to do this?
+		unsorted LL, array
+			add an element- constant
+			removing element- O(n)
+	Less Bad
+		sorted LL, array
+			add an element- O(n)
+			removing element- O(n) with shifting, O(1) w/o shifting
+	Better
+		binary search tree
+		balanced tree: 
+			adding- O(log n)
+			removing- O(log n)
+	Could I change the BST to have a priority structure?
+		root has highest priority, children have lower priority than parent
+		implement this with Binary Heap
+
+Binary Heap
+	partially ordered complete binary tree (0, 1, 2 children)
+	children's priority is less than parent's priority
+	all levels full, except bottom
+1) Min Heap: want smallest numbers at top, then go down from there (priority on smallest numbers)
+						0
+					3		2
+				4		5
+	binary heap referred to as "heap"
+	Heap Property
+	- each node has higher priority than its children
+
+Heap stored in an array
+	use elements' index in the array to assign it a position in the heap
+	for each element, element at index x has leftChild stored at 2x+1 and rightChild stored 2x+2
+	
+When removing from heap:
+-Always removing the root. So what becomes the new root?
+-Will be one of the existing root’s children
+
+Adding to tree:
+-
+
+Define Min-Heap Class:
+class minHeap
+{
+   public:
+	MinHeap(int capacity); //size of the array
+	push(int); //building heap of integers in this example
+	pop();
+	printHeap();
+   private:
+	int* heap; //pointer to array
+	int capacity; 
+	int currentSize; //know how much is in the array at a given time
+	void minHeapify(int); //used as part of pop operation
+};
+
+Push: assume we have empty heap, want to add one item at a time
+MinHeap::push(int k){
+	//check if full
+	if (currentSize==capacity)
+	   cout<<“error, heap is full”<<endl;
+	else
+	   currentSize++;
+	   int i=currentSize; 
+	   heap[i]=k; //add at first unused position in array index, may not necessarily be in correct place
+	   //move to correct index
+	   while(i>1 and heap[i/2]>heap[i]){
+		//checks if parent is greater than child
+		swap(heap[i], heap[i/2];
+		i=i/2;	
+	   }
+}
+
+Pop: remove top element, heap[1]
+MinHeap::pop(){
+	if(currentSize==0){
+	   cout<<“empty”<<endl;
+	   return -1;
+	}
+	if(currentSize==1){ //no additional operations when only item in heap is root
+	   currentSize—-;
+	   return heap[i];
+	}
+	int popVal=heap[1];
+	heap[1]=heap[currentSize]; //moves whatever is in last index, to first index (root position)
+	currentSize—-;
+	minHeapify(1); //move new root into its correct position 
+}
+
+MinHeap::minHeapify(int i){ //i is index in the heap
+	left=2*i;
+	right=2*i+1;
+	smallest=i;
+	//conditionals give us smallest heap value, left, right, parent
+	if(left<=currentSize && heap[left]<heap[i]){
+	   smallest=left; //element at left is less than element at i (don’t want that)
+	}
+	if(right<=currentSize && heap[right]<heap[smallest]){
+	   smallest=right;
+	}
+	if(smallest!=i){ //there was some child smaller than parent
+	   swap(heap[i], heap[smallest]; //parent is heap[i]
+	   minHeapify(smallest); //recursive call
+	}
+}
+
+————————————————————————————————PROJECT STUFF———————————————————————————————————
+//create struct for patient
+//linked list:
+struct Patient
+{
+   //need forward pointer: Patient* next;
+   //as you read in file, you read in patients one by one
+   //MAKE LINKED LIST LIKE THE NETWORK CITIES ASSIGNMENT 3
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

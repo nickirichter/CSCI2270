@@ -1,0 +1,15 @@
+STL: Standard Template Library
+built-in container classes
+priority queue available with #include <queue>
+multiple constructors
+handles any type: built in or user defined
+In STL, priority queues take three template parameters
+
+template
+< 	class T
+	class Container=vector<T>
+	class Compare=less<typename Container::value_type>
+>
+class priority_queue;
+
+//default is max heap

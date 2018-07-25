@@ -1,0 +1,78 @@
+Lecture 3/2: Traversing BST
+
+Different orderings for processing tree information
+
+IN ORDER TRAVERSAL
+traverse tree, printing all values in order
+we know left<parent<=right; to print we need to follow this order
+	inorder(node *n)
+		if(n->left!=NULL)
+			inorder(n->left)
+		cout<<n->key<<endl;
+		if(n->right!=NULL)
+			inorder(n->right);
+
+PREORDER TRAVERSAL
+process parent before its children
+preorder(node* n)
+	cout<<n->key<<endl;
+	if(n->left!=NULL)
+		preorder(n->left)
+	if(n->right!=NULL)
+		preorder(n->right)
+
+POSTORDER TRAVERSAL: use this in the assignment
+processes children before parent
+postorder(node* n)
+	if(n->left!=NULL)
+		postorder(n->left)
+	if(n->right!=NULL)
+		postorder(n->right)
+	cout<<n->key<<endl;
+
+delete nodes in BST using postorder traversal, don't want to delete parents first, work your way up the tree
+
+EXAMPLE: Build a LL of all values in a BST between a high and low value; between 5-12 inclusive
+																					10
+																				6			15
+																			4		7	14		17
+																		3		5	
+																	2
+
+want 5, 6, 7, 10, 12
+identify branches in the tree that do not need to be searched because their values fall outside given range
+Left subtree of 10: could contain values 5-9
+Left subtree of 6: could contain a 5
+Right subtree of 6: could contain values 6-9
+Left subtree of 4: contains NO values of interest (values < 4)
+Right subtree 15: contains NO values of interest (values > 12)
+Left subtree of 15: could contain values 10-14
+Task: create recursive algorithm that only searches what we need
+
+Cases to Consider:
+Node* value in range: print the value, left and right children could also be in range, check them 
+Node* value is > high value: know that left child could be in range
+Node* value is < low value: then right child could be in range
+Function checkNode:
+inorder traversal, checking low and high
+
+void checkNode(node* n, int low, int high)
+{
+	if(n!=NULL)
+	{
+		if(n->key>=low and n->key <= high)
+		{
+			checkNode(n->left, low, high)
+			cout<<n->key<<endl; //instead of printing, add to linked list by altering this line of code
+			checkNode(n->right, low, high)
+		}
+		else if(n->key < low)
+		{
+			checkNode(n->right, low, high)
+		}
+		else if(n->key >= high)
+		{
+			checkNode(n->left, low, high)
+		}
+	}
+}
